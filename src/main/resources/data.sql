@@ -105,7 +105,7 @@ INSERT INTO payments (id, donor_id, commitment_id, classe_id, montant, date_paie
 -- ========================================
 -- 6. DÉPENSES (EXPENSES)
 -- ========================================
-INSERT INTO expenses (id, class_entity_id, branch_id, montant, date, type, description, period, beneficiaire) VALUES
+INSERT INTO expenses (id, class_id, branch_id, montant, date, type, description, period, beneficiaire) VALUES
 -- Dépenses Nouakchott - Janvier 2024
 (1, 1, 1, 15000, '2024-01-15', 'Fournitures', 'Achat de livres coraniques et ardoises', '2024-01', 'Librairie Al-Qalam'),
 (2, 2, 1, 12000, '2024-01-20', 'Fournitures', 'Cahiers, stylos et matériel scolaire', '2024-01', 'Papeterie Moderne'),
