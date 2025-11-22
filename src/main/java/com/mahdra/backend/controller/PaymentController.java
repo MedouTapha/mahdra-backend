@@ -1,9 +1,14 @@
 package com.mahdra.backend.controller;
 
-import com.mahdra.backend.entity.Payment;
+import com.mahdra.backend.dto.PaymentRequestDTO;
+import com.mahdra.backend.dto.PaymentResponseDTO;
 import com.mahdra.backend.service.PaymentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,38 +25,59 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public ResponseEntity<List<Payment>> getAllPayments(@RequestParam(required = false) Long donorId,
-                                                          @RequestParam(required = false) Long classeId,
-                                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                                          @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    public ResponseEntity<?> getAllPayments(
+            @RequestParam(required = false) Long donorId,
+            @RequestParam(required = false) Long classeId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        // Filter by donorId
         if (donorId != null) {
-            return ResponseEntity.ok(paymentService.getPaymentsByDonor(donorId));
+            List<PaymentResponseDTO> payments = paymentService.getPaymentsByDonor(donorId);
+            return ResponseEntity.ok(payments);
         }
+
+        // Filter by classeId
         if (classeId != null) {
-            return ResponseEntity.ok(paymentService.getPaymentsByClasse(classeId));
+            List<PaymentResponseDTO> payments = paymentService.getPaymentsByClasse(classeId);
+            return ResponseEntity.ok(payments);
         }
+
+        // Filter by date range
         if (startDate != null && endDate != null) {
-            return ResponseEntity.ok(paymentService.getPaymentsByDateRange(startDate, endDate));
+            List<PaymentResponseDTO> payments = paymentService.getPaymentsByDateRange(startDate, endDate);
+            return ResponseEntity.ok(payments);
         }
-        return ResponseEntity.ok(paymentService.getAllPayments());
+
+        // Return all with or without pagination
+        if (paginated) {
+            Page<PaymentResponseDTO> page = paymentService.getAllPayments(pageable);
+            return ResponseEntity.ok(page);
+        } else {
+            List<PaymentResponseDTO> list = paymentService.getAllPayments();
+            return ResponseEntity.ok(list);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Payment> getPaymentById(@PathVariable Long id) {
-        return paymentService.getPaymentById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<PaymentResponseDTO> getPaymentById(@PathVariable Long id) {
+        PaymentResponseDTO payment = paymentService.getPaymentById(id);
+        return ResponseEntity.ok(payment);
     }
 
     @PostMapping
-    public ResponseEntity<Payment> createPayment(@Valid @RequestBody Payment payment) {
-        Payment created = paymentService.createPayment(payment);
+    public ResponseEntity<PaymentResponseDTO> createPayment(@Valid @RequestBody PaymentRequestDTO requestDTO) {
+        PaymentResponseDTO created = paymentService.createPayment(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @Valid @RequestBody Payment payment) {
-        Payment updated = paymentService.updatePayment(id, payment);
+    public ResponseEntity<PaymentResponseDTO> updatePayment(
+            @PathVariable Long id,
+            @Valid @RequestBody PaymentRequestDTO requestDTO) {
+        PaymentResponseDTO updated = paymentService.updatePayment(id, requestDTO);
         return ResponseEntity.ok(updated);
     }
 

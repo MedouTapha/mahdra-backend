@@ -1,9 +1,14 @@
 package com.mahdra.backend.controller;
 
-import com.mahdra.backend.entity.Expense;
+import com.mahdra.backend.dto.ExpenseRequestDTO;
+import com.mahdra.backend.dto.ExpenseResponseDTO;
 import com.mahdra.backend.service.ExpenseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,37 +23,58 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @GetMapping
-    public ResponseEntity<List<Expense>> getAllExpenses(@RequestParam(required = false) Long classId,
-                                                          @RequestParam(required = false) Long branchId,
-                                                          @RequestParam(required = false) String period) {
+    public ResponseEntity<?> getAllExpenses(
+            @RequestParam(required = false) Long classId,
+            @RequestParam(required = false) Long branchId,
+            @RequestParam(required = false) String period,
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        // Filter by classId
         if (classId != null) {
-            return ResponseEntity.ok(expenseService.getExpensesByClass(classId));
+            List<ExpenseResponseDTO> expenses = expenseService.getExpensesByClass(classId);
+            return ResponseEntity.ok(expenses);
         }
+
+        // Filter by branchId
         if (branchId != null) {
-            return ResponseEntity.ok(expenseService.getExpensesByBranch(branchId));
+            List<ExpenseResponseDTO> expenses = expenseService.getExpensesByBranch(branchId);
+            return ResponseEntity.ok(expenses);
         }
+
+        // Filter by period
         if (period != null) {
-            return ResponseEntity.ok(expenseService.getExpensesByPeriod(period));
+            List<ExpenseResponseDTO> expenses = expenseService.getExpensesByPeriod(period);
+            return ResponseEntity.ok(expenses);
         }
-        return ResponseEntity.ok(expenseService.getAllExpenses());
+
+        // Return all with or without pagination
+        if (paginated) {
+            Page<ExpenseResponseDTO> page = expenseService.getAllExpenses(pageable);
+            return ResponseEntity.ok(page);
+        } else {
+            List<ExpenseResponseDTO> list = expenseService.getAllExpenses();
+            return ResponseEntity.ok(list);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Expense> getExpenseById(@PathVariable Long id) {
-        return expenseService.getExpenseById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ExpenseResponseDTO> getExpenseById(@PathVariable Long id) {
+        ExpenseResponseDTO expense = expenseService.getExpenseById(id);
+        return ResponseEntity.ok(expense);
     }
 
     @PostMapping
-    public ResponseEntity<Expense> createExpense(@Valid @RequestBody Expense expense) {
-        Expense created = expenseService.createExpense(expense);
+    public ResponseEntity<ExpenseResponseDTO> createExpense(@Valid @RequestBody ExpenseRequestDTO requestDTO) {
+        ExpenseResponseDTO created = expenseService.createExpense(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Expense> updateExpense(@PathVariable Long id, @Valid @RequestBody Expense expense) {
-        Expense updated = expenseService.updateExpense(id, expense);
+    public ResponseEntity<ExpenseResponseDTO> updateExpense(
+            @PathVariable Long id,
+            @Valid @RequestBody ExpenseRequestDTO requestDTO) {
+        ExpenseResponseDTO updated = expenseService.updateExpense(id, requestDTO);
         return ResponseEntity.ok(updated);
     }
 

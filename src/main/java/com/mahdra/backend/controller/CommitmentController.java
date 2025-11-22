@@ -1,9 +1,14 @@
 package com.mahdra.backend.controller;
 
-import com.mahdra.backend.entity.Commitment;
+import com.mahdra.backend.dto.CommitmentRequestDTO;
+import com.mahdra.backend.dto.CommitmentResponseDTO;
 import com.mahdra.backend.service.CommitmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,33 +23,51 @@ public class CommitmentController {
     private final CommitmentService commitmentService;
 
     @GetMapping
-    public ResponseEntity<List<Commitment>> getAllCommitments(@RequestParam(required = false) Long donorId,
-                                                                @RequestParam(required = false) String statut) {
+    public ResponseEntity<?> getAllCommitments(
+            @RequestParam(required = false) Long donorId,
+            @RequestParam(required = false) String statut,
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        // Filter by donorId
         if (donorId != null) {
-            return ResponseEntity.ok(commitmentService.getCommitmentsByDonor(donorId));
+            List<CommitmentResponseDTO> commitments = commitmentService.getCommitmentsByDonor(donorId);
+            return ResponseEntity.ok(commitments);
         }
+
+        // Filter by statut
         if (statut != null) {
-            return ResponseEntity.ok(commitmentService.getCommitmentsByStatut(statut));
+            List<CommitmentResponseDTO> commitments = commitmentService.getCommitmentsByStatut(statut);
+            return ResponseEntity.ok(commitments);
         }
-        return ResponseEntity.ok(commitmentService.getAllCommitments());
+
+        // Return all with or without pagination
+        if (paginated) {
+            Page<CommitmentResponseDTO> page = commitmentService.getAllCommitments(pageable);
+            return ResponseEntity.ok(page);
+        } else {
+            List<CommitmentResponseDTO> list = commitmentService.getAllCommitments();
+            return ResponseEntity.ok(list);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Commitment> getCommitmentById(@PathVariable Long id) {
-        return commitmentService.getCommitmentById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<CommitmentResponseDTO> getCommitmentById(@PathVariable Long id) {
+        CommitmentResponseDTO commitment = commitmentService.getCommitmentById(id);
+        return ResponseEntity.ok(commitment);
     }
 
     @PostMapping
-    public ResponseEntity<Commitment> createCommitment(@Valid @RequestBody Commitment commitment) {
-        Commitment created = commitmentService.createCommitment(commitment);
+    public ResponseEntity<CommitmentResponseDTO> createCommitment(@Valid @RequestBody CommitmentRequestDTO requestDTO) {
+        CommitmentResponseDTO created = commitmentService.createCommitment(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Commitment> updateCommitment(@PathVariable Long id, @Valid @RequestBody Commitment commitment) {
-        Commitment updated = commitmentService.updateCommitment(id, commitment);
+    public ResponseEntity<CommitmentResponseDTO> updateCommitment(
+            @PathVariable Long id,
+            @Valid @RequestBody CommitmentRequestDTO requestDTO) {
+        CommitmentResponseDTO updated = commitmentService.updateCommitment(id, requestDTO);
         return ResponseEntity.ok(updated);
     }
 
