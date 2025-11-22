@@ -51,6 +51,14 @@ public class Commitment {
     @JsonManagedReference
     private List<Payment> payments = new ArrayList<>();
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "commitment_classes",
+        joinColumns = @JoinColumn(name = "commitment_id"),
+        inverseJoinColumns = @JoinColumn(name = "class_id")
+    )
+    private List<ClassEntity> classes = new ArrayList<>();
+
     @PrePersist
     protected void onCreate() {
         if (dateEngagement == null) {
