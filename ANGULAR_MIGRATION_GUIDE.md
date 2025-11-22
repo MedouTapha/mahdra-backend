@@ -2,6 +2,25 @@
 
 Ce guide vous aide à migrer votre frontend Angular de Firebase/Firestore vers le backend Spring Boot.
 
+## Prérequis Backend
+
+Avant de commencer la migration du frontend, assurez-vous que le backend est prêt:
+
+- **Java 21** installé
+- **Maven 3.9+** installé
+- **PostgreSQL 14+** installé et configuré
+- **Spring Boot 3.4.0** (inclus dans le projet)
+
+Pour installer Java 21:
+```bash
+# Ubuntu/Debian
+sudo apt update
+sudo apt install openjdk-21-jdk
+
+# Vérifier
+java -version
+```
+
 ## Étape 1: Supprimer Firebase
 
 ### 1.1 Désinstaller les dépendances Firebase
