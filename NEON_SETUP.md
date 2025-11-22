@@ -20,7 +20,7 @@
    - Ajoutez les 3 variables suivantes:
 
    ```
-   NEON_DATABASE_URL=jdbc:postgresql://ep-calm-queen-a85ibf5e-pooler.eastus2.azure.neon.tech/neondb?sslmode=require
+   NEON_DATABASE_URL=jdbc:postgresql://ep-calm-queen-a85ibf5e-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&options=-c%20channel_binding=require
    NEON_DATABASE_USERNAME=neondb_owner
    NEON_DATABASE_PASSWORD=npg_rcqzwux0OJ8R
    ```
@@ -51,7 +51,7 @@ Si vous préférez utiliser Maven en ligne de commande:
 **PowerShell:**
 ```powershell
 # Charger les variables d'environnement
-$env:NEON_DATABASE_URL="jdbc:postgresql://ep-calm-queen-a85ibf5e-pooler.eastus2.azure.neon.tech/neondb?sslmode=require"
+$env:NEON_DATABASE_URL="jdbc:postgresql://ep-calm-queen-a85ibf5e-pooler.eastus2.azure.neon.tech/neondb?sslmode=require&options=-c%20channel_binding=require"
 $env:NEON_DATABASE_USERNAME="neondb_owner"
 $env:NEON_DATABASE_PASSWORD="npg_rcqzwux0OJ8R"
 
