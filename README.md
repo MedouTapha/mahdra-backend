@@ -5,7 +5,8 @@ Backend API REST pour Mahdra - Système de gestion des branches et classes mauri
 ## Technologies
 
 - **Java 21**
-- **Spring Boot 3.4.0**
+- **Spring Boot 4.0.0** (dernière version stable)
+- **Spring Framework 7**
 - **Spring Data JPA**
 - **PostgreSQL**
 - **Lombok**
@@ -13,9 +14,20 @@ Backend API REST pour Mahdra - Système de gestion des branches et classes mauri
 
 ## Prérequis
 
-- Java 21 ou supérieur
+- Java 21 ou supérieur (Java 25 supporté)
 - Maven 3.9+
 - PostgreSQL 14 ou supérieur
+
+## Nouveautés Spring Boot 4.0.0
+
+Ce projet utilise **Spring Boot 4.0.0**, publié le 20 novembre 2025, qui apporte:
+
+- ✅ **Modularisation complète** - JARs plus petits et ciblés
+- ✅ **Support Java 25** - Tout en gardant la compatibilité Java 17+
+- ✅ **Spring Framework 7** - Nouvelles fonctionnalités du framework
+- ✅ **API Versioning** - Support natif du versioning d'API REST
+- ✅ **HTTP Service Clients** - Clients REST améliorés
+- ✅ **Performances optimisées** - Meilleure gestion des ressources
 
 ## Installation
 
@@ -242,16 +254,28 @@ Pour déployer en production:
    java -jar -Dspring.profiles.active=prod target/mahdra-backend-1.0.0.jar
    ```
 
-## Mise à niveau
+## Stack technique moderne
 
 Ce backend utilise les dernières versions stables:
-- **Java 21** - Support LTS jusqu'en septembre 2028
-- **Spring Boot 3.4.0** - Dernière version avec support des Record Pattern Matching et Virtual Threads
+
+- **Java 21 LTS** - Support jusqu'en septembre 2028
+- **Spring Boot 4.0.0** - Version publiée en novembre 2025
+- **Spring Framework 7** - Fondation complètement modulaire
+- **PostgreSQL** - Base de données relationnelle robuste
+
+### Avantages de Spring Boot 4.0
+
+1. **Modularisation** - Code mieux organisé, déploiements plus légers
+2. **Performance** - Optimisations significatives
+3. **API Versioning** - Gestion native des versions d'API
+4. **Support Java moderne** - Compatible Java 17 à 25
+5. **Sécurité** - Derniers patches et améliorations
 
 ## Documentation
 
 - [Guide de migration Angular](ANGULAR_MIGRATION_GUIDE.md) - Comment migrer le frontend de Firebase vers ce backend
-- [Spring Boot Documentation](https://docs.spring.io/spring-boot/docs/3.4.0/reference/)
+- [Spring Boot 4.0 Release Notes](https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-4.0-Release-Notes)
+- [Spring Framework 7 Documentation](https://docs.spring.io/spring-framework/docs/7.0.0/reference/html/)
 - [Spring Data JPA](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 
 ## Support
