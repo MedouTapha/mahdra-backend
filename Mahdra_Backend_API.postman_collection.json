@@ -1,0 +1,816 @@
+{
+	"info": {
+		"_postman_id": "mahdra-backend-collection",
+		"name": "Mahdra Backend API",
+		"description": "Collection complète pour tester l'API REST du backend Spring Boot Mahdra\n\nBase URL: http://localhost:8080\n\nEntités:\n- Branches\n- Classes\n- Donors (Donateurs)\n- Commitments (Engagements)\n- Payments (Paiements)\n- Expenses (Dépenses)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Branches",
+			"item": [
+				{
+					"name": "Get All Branches",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/branches",
+							"host": ["{{baseUrl}}"],
+							"path": ["branches"]
+						},
+						"description": "Récupère toutes les branches (Nouakchott, Nouadhibou, Kaedi, Rosso, Kiffa)"
+					}
+				},
+				{
+					"name": "Get Branch By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/branches/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["branches", "1"]
+						},
+						"description": "Récupère une branche par son ID (exemple: 1 = Nouakchott)"
+					}
+				},
+				{
+					"name": "Create Branch",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nomfr\": \"Atar\",\n  \"nomar\": \"أطار\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/branches",
+							"host": ["{{baseUrl}}"],
+							"path": ["branches"]
+						},
+						"description": "Crée une nouvelle branche"
+					}
+				},
+				{
+					"name": "Update Branch",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nomfr\": \"Nouakchott Centre\",\n  \"nomar\": \"نواكشوط المركز\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/branches/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["branches", "1"]
+						},
+						"description": "Met à jour une branche existante"
+					}
+				},
+				{
+					"name": "Delete Branch",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/branches/6",
+							"host": ["{{baseUrl}}"],
+							"path": ["branches", "6"]
+						},
+						"description": "Supprime une branche (utilisez un ID qui n'existe pas dans les données de base)"
+					}
+				}
+			]
+		},
+		{
+			"name": "Classes",
+			"item": [
+				{
+					"name": "Get All Classes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes"]
+						},
+						"description": "Récupère toutes les classes"
+					}
+				},
+				{
+					"name": "Get Classes By Branch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes?branchId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes"],
+							"query": [
+								{
+									"key": "branchId",
+									"value": "1",
+									"description": "ID de la branche (1=Nouakchott)"
+								}
+							]
+						},
+						"description": "Récupère toutes les classes d'une branche spécifique"
+					}
+				},
+				{
+					"name": "Get Classes By Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes?type=Coranique",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes"],
+							"query": [
+								{
+									"key": "type",
+									"value": "Coranique",
+									"description": "Type: 'Coranique' ou 'Franco-arabe'"
+								}
+							]
+						},
+						"description": "Récupère toutes les classes d'un type spécifique"
+					}
+				},
+				{
+					"name": "Get Class By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes", "1"]
+						},
+						"description": "Récupère une classe par son ID"
+					}
+				},
+				{
+					"name": "Create Class",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Classe Coranique Al-Fajr\",\n  \"type\": \"Coranique\",\n  \"yearStart\": 2024,\n  \"branch\": {\n    \"id\": 1\n  },\n  \"niveau\": \"Débutant\",\n  \"studentCount\": 20,\n  \"teacher\": \"Cheikh Ibrahim Ould Ali\",\n  \"description\": \"Nouvelle classe coranique\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes"]
+						},
+						"description": "Crée une nouvelle classe"
+					}
+				},
+				{
+					"name": "Update Class",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Classe Coranique Al-Fath (Mise à jour)\",\n  \"type\": \"Coranique\",\n  \"yearStart\": 2024,\n  \"branch\": {\n    \"id\": 1\n  },\n  \"niveau\": \"Intermédiaire\",\n  \"studentCount\": 30,\n  \"teacher\": \"Cheikh Mohamed Ould Abdallah\",\n  \"description\": \"Classe mise à niveau intermédiaire\",\n  \"active\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/classes/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes", "1"]
+						},
+						"description": "Met à jour une classe existante"
+					}
+				},
+				{
+					"name": "Delete Class",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/classes/11",
+							"host": ["{{baseUrl}}"],
+							"path": ["classes", "11"]
+						},
+						"description": "Supprime une classe"
+					}
+				}
+			]
+		},
+		{
+			"name": "Donors (Donateurs)",
+			"item": [
+				{
+					"name": "Get All Donors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donors",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors"]
+						},
+						"description": "Récupère tous les donateurs"
+					}
+				},
+				{
+					"name": "Get Active Donors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donors?actif=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors"],
+							"query": [
+								{
+									"key": "actif",
+									"value": "true",
+									"description": "Filtre les donateurs actifs"
+								}
+							]
+						},
+						"description": "Récupère uniquement les donateurs actifs"
+					}
+				},
+				{
+					"name": "Get Donors By Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donors?type=Personne physique",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors"],
+							"query": [
+								{
+									"key": "type",
+									"value": "Personne physique",
+									"description": "Type: 'Personne physique' ou 'Personne morale'"
+								}
+							]
+						},
+						"description": "Récupère les donateurs d'un type spécifique"
+					}
+				},
+				{
+					"name": "Get Donor By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donors/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors", "1"]
+						},
+						"description": "Récupère un donateur par son ID"
+					}
+				},
+				{
+					"name": "Create Donor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Sow\",\n  \"prenom\": \"Amadou\",\n  \"email\": \"amadou.sow@example.mr\",\n  \"telephone\": \"+22245678920\",\n  \"adresse\": \"Tevragh Zeina, Nouakchott\",\n  \"type\": \"Personne physique\",\n  \"actif\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/donors",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors"]
+						},
+						"description": "Crée un nouveau donateur"
+					}
+				},
+				{
+					"name": "Update Donor",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nom\": \"Ould Ahmed\",\n  \"prenom\": \"Mohamed\",\n  \"email\": \"mohamed.ouldahmed.updated@example.mr\",\n  \"telephone\": \"+22245678901\",\n  \"adresse\": \"Tevragh Zeina Nord, Nouakchott\",\n  \"type\": \"Personne physique\",\n  \"actif\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/donors/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors", "1"]
+						},
+						"description": "Met à jour un donateur existant"
+					}
+				},
+				{
+					"name": "Delete Donor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/donors/11",
+							"host": ["{{baseUrl}}"],
+							"path": ["donors", "11"]
+						},
+						"description": "Supprime un donateur"
+					}
+				}
+			]
+		},
+		{
+			"name": "Commitments (Engagements)",
+			"item": [
+				{
+					"name": "Get All Commitments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commitments",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments"]
+						},
+						"description": "Récupère tous les engagements"
+					}
+				},
+				{
+					"name": "Get Commitments By Donor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commitments?donorId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments"],
+							"query": [
+								{
+									"key": "donorId",
+									"value": "1",
+									"description": "ID du donateur"
+								}
+							]
+						},
+						"description": "Récupère les engagements d'un donateur spécifique"
+					}
+				},
+				{
+					"name": "Get Commitments By Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commitments?statut=En cours",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments"],
+							"query": [
+								{
+									"key": "statut",
+									"value": "En cours",
+									"description": "Statut: 'En cours', 'Payé', 'En retard', 'Annulé'"
+								}
+							]
+						},
+						"description": "Récupère les engagements par statut"
+					}
+				},
+				{
+					"name": "Get Commitment By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commitments/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments", "1"]
+						},
+						"description": "Récupère un engagement par son ID"
+					}
+				},
+				{
+					"name": "Create Commitment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"donor\": {\n    \"id\": 1\n  },\n  \"montant\": 75000,\n  \"dateEngagement\": \"2024-05-01\",\n  \"dateEcheance\": \"2024-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Nouvel engagement annuel pour soutien éducatif\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/commitments",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments"]
+						},
+						"description": "Crée un nouvel engagement"
+					}
+				},
+				{
+					"name": "Update Commitment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"donor\": {\n    \"id\": 1\n  },\n  \"montant\": 60000,\n  \"dateEngagement\": \"2024-01-15\",\n  \"dateEcheance\": \"2024-12-31\",\n  \"statut\": \"Payé\",\n  \"description\": \"Engagement complété\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/commitments/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments", "1"]
+						},
+						"description": "Met à jour un engagement existant"
+					}
+				},
+				{
+					"name": "Delete Commitment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/commitments/11",
+							"host": ["{{baseUrl}}"],
+							"path": ["commitments", "11"]
+						},
+						"description": "Supprime un engagement"
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments (Paiements)",
+			"item": [
+				{
+					"name": "Get All Payments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments"]
+						},
+						"description": "Récupère tous les paiements"
+					}
+				},
+				{
+					"name": "Get Payments By Donor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments?donorId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments"],
+							"query": [
+								{
+									"key": "donorId",
+									"value": "1",
+									"description": "ID du donateur"
+								}
+							]
+						},
+						"description": "Récupère les paiements d'un donateur spécifique"
+					}
+				},
+				{
+					"name": "Get Payments By Class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments?classeId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments"],
+							"query": [
+								{
+									"key": "classeId",
+									"value": "1",
+									"description": "ID de la classe"
+								}
+							]
+						},
+						"description": "Récupère les paiements pour une classe spécifique"
+					}
+				},
+				{
+					"name": "Get Payments By Date Range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments?startDate=2024-01-01&endDate=2024-03-31",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments"],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-01-01",
+									"description": "Date de début (format: yyyy-MM-dd)"
+								},
+								{
+									"key": "endDate",
+									"value": "2024-03-31",
+									"description": "Date de fin (format: yyyy-MM-dd)"
+								}
+							]
+						},
+						"description": "Récupère les paiements dans une période donnée"
+					}
+				},
+				{
+					"name": "Get Total Payments By Donor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/total/donor/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments", "total", "donor", "1"]
+						},
+						"description": "Calcule le total des paiements d'un donateur"
+					}
+				},
+				{
+					"name": "Get Total Payments By Class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/total/classe/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments", "total", "classe", "1"]
+						},
+						"description": "Calcule le total des paiements pour une classe"
+					}
+				},
+				{
+					"name": "Get Payment By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments", "1"]
+						},
+						"description": "Récupère un paiement par son ID"
+					}
+				},
+				{
+					"name": "Create Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"donor\": {\n    \"id\": 1\n  },\n  \"commitment\": {\n    \"id\": 1\n  },\n  \"classe\": {\n    \"id\": 1\n  },\n  \"montant\": 10000,\n  \"datePaiement\": \"2024-05-15\",\n  \"modePaiement\": \"Virement\",\n  \"reference\": \"VIR20240515001\",\n  \"remarque\": \"Paiement mensuel mai 2024\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments"]
+						},
+						"description": "Crée un nouveau paiement"
+					}
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"donor\": {\n    \"id\": 1\n  },\n  \"commitment\": {\n    \"id\": 1\n  },\n  \"classe\": {\n    \"id\": 1\n  },\n  \"montant\": 12000,\n  \"datePaiement\": \"2024-01-15\",\n  \"modePaiement\": \"Virement\",\n  \"reference\": \"VIR20240115001-UPDATED\",\n  \"remarque\": \"Montant ajusté\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/payments/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments", "1"]
+						},
+						"description": "Met à jour un paiement existant"
+					}
+				},
+				{
+					"name": "Delete Payment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/payments/16",
+							"host": ["{{baseUrl}}"],
+							"path": ["payments", "16"]
+						},
+						"description": "Supprime un paiement"
+					}
+				}
+			]
+		},
+		{
+			"name": "Expenses (Dépenses)",
+			"item": [
+				{
+					"name": "Get All Expenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses"]
+						},
+						"description": "Récupère toutes les dépenses"
+					}
+				},
+				{
+					"name": "Get Expenses By Class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses?classId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses"],
+							"query": [
+								{
+									"key": "classId",
+									"value": "1",
+									"description": "ID de la classe"
+								}
+							]
+						},
+						"description": "Récupère les dépenses d'une classe spécifique"
+					}
+				},
+				{
+					"name": "Get Expenses By Branch",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses?branchId=1",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses"],
+							"query": [
+								{
+									"key": "branchId",
+									"value": "1",
+									"description": "ID de la branche"
+								}
+							]
+						},
+						"description": "Récupère les dépenses d'une branche spécifique"
+					}
+				},
+				{
+					"name": "Get Expenses By Period",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses?period=2024-01",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses"],
+							"query": [
+								{
+									"key": "period",
+									"value": "2024-01",
+									"description": "Période (format: yyyy-MM)"
+								}
+							]
+						},
+						"description": "Récupère les dépenses d'une période spécifique"
+					}
+				},
+				{
+					"name": "Get Expense By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses", "1"]
+						},
+						"description": "Récupère une dépense par son ID"
+					}
+				},
+				{
+					"name": "Create Expense",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"classEntity\": {\n    \"id\": 1\n  },\n  \"branch\": {\n    \"id\": 1\n  },\n  \"montant\": 18000,\n  \"date\": \"2024-05-15\",\n  \"type\": \"Fournitures\",\n  \"description\": \"Achat de matériel pédagogique\",\n  \"period\": \"2024-05\",\n  \"beneficiaire\": \"Librairie Al-Qalam\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/expenses",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses"]
+						},
+						"description": "Crée une nouvelle dépense"
+					}
+				},
+				{
+					"name": "Update Expense",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"classEntity\": {\n    \"id\": 1\n  },\n  \"branch\": {\n    \"id\": 1\n  },\n  \"montant\": 20000,\n  \"date\": \"2024-01-15\",\n  \"type\": \"Fournitures\",\n  \"description\": \"Achat de livres coraniques et ardoises - montant ajusté\",\n  \"period\": \"2024-01\",\n  \"beneficiaire\": \"Librairie Al-Qalam\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/expenses/1",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses", "1"]
+						},
+						"description": "Met à jour une dépense existante"
+					}
+				},
+				{
+					"name": "Delete Expense",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/expenses/21",
+							"host": ["{{baseUrl}}"],
+							"path": ["expenses", "21"]
+						},
+						"description": "Supprime une dépense"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080/api",
+			"type": "string"
+		}
+	]
+}
