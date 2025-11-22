@@ -1,9 +1,14 @@
 package com.mahdra.backend.controller;
 
-import com.mahdra.backend.entity.Donor;
+import com.mahdra.backend.dto.DonorRequestDTO;
+import com.mahdra.backend.dto.DonorResponseDTO;
 import com.mahdra.backend.service.DonorService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,33 +23,51 @@ public class DonorController {
     private final DonorService donorService;
 
     @GetMapping
-    public ResponseEntity<List<Donor>> getAllDonors(@RequestParam(required = false) Boolean actif,
-                                                      @RequestParam(required = false) String type) {
+    public ResponseEntity<?> getAllDonors(
+            @RequestParam(required = false) Boolean actif,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        // Filter by actif
         if (actif != null && actif) {
-            return ResponseEntity.ok(donorService.getActiveDonors());
+            List<DonorResponseDTO> donors = donorService.getActiveDonors();
+            return ResponseEntity.ok(donors);
         }
+
+        // Filter by type
         if (type != null) {
-            return ResponseEntity.ok(donorService.getDonorsByType(type));
+            List<DonorResponseDTO> donors = donorService.getDonorsByType(type);
+            return ResponseEntity.ok(donors);
         }
-        return ResponseEntity.ok(donorService.getAllDonors());
+
+        // Return all with or without pagination
+        if (paginated) {
+            Page<DonorResponseDTO> page = donorService.getAllDonors(pageable);
+            return ResponseEntity.ok(page);
+        } else {
+            List<DonorResponseDTO> list = donorService.getAllDonors();
+            return ResponseEntity.ok(list);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Donor> getDonorById(@PathVariable Long id) {
-        return donorService.getDonorById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<DonorResponseDTO> getDonorById(@PathVariable Long id) {
+        DonorResponseDTO donor = donorService.getDonorById(id);
+        return ResponseEntity.ok(donor);
     }
 
     @PostMapping
-    public ResponseEntity<Donor> createDonor(@Valid @RequestBody Donor donor) {
-        Donor created = donorService.createDonor(donor);
+    public ResponseEntity<DonorResponseDTO> createDonor(@Valid @RequestBody DonorRequestDTO requestDTO) {
+        DonorResponseDTO created = donorService.createDonor(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Donor> updateDonor(@PathVariable Long id, @Valid @RequestBody Donor donor) {
-        Donor updated = donorService.updateDonor(id, donor);
+    public ResponseEntity<DonorResponseDTO> updateDonor(
+            @PathVariable Long id,
+            @Valid @RequestBody DonorRequestDTO requestDTO) {
+        DonorResponseDTO updated = donorService.updateDonor(id, requestDTO);
         return ResponseEntity.ok(updated);
     }
 

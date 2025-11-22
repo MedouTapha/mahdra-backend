@@ -1,18 +1,20 @@
 package com.mahdra.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "payments")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Payment {
 
     @Id
@@ -22,14 +24,17 @@ public class Payment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "donor_id", nullable = false)
     @NotNull(message = "Le donateur est obligatoire")
+    @JsonBackReference
     private Donor donor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "commitment_id")
+    @JsonBackReference
     private Commitment commitment;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "classe_id")
+    @JsonBackReference
     private ClassEntity classe;
 
     @NotNull(message = "Le montant est obligatoire")
@@ -54,5 +59,18 @@ public class Payment {
         if (datePaiement == null) {
             datePaiement = LocalDate.now();
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Payment)) return false;
+        Payment payment = (Payment) o;
+        return Objects.equals(id, payment.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
