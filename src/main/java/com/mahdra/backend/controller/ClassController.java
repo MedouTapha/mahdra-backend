@@ -1,9 +1,14 @@
 package com.mahdra.backend.controller;
 
-import com.mahdra.backend.entity.ClassEntity;
+import com.mahdra.backend.dto.ClassRequestDTO;
+import com.mahdra.backend.dto.ClassResponseDTO;
 import com.mahdra.backend.service.ClassService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,33 +23,51 @@ public class ClassController {
     private final ClassService classService;
 
     @GetMapping
-    public ResponseEntity<List<ClassEntity>> getAllClasses(@RequestParam(required = false) Long branchId,
-                                                            @RequestParam(required = false) String type) {
+    public ResponseEntity<?> getAllClasses(
+            @RequestParam(required = false) Long branchId,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false, defaultValue = "false") boolean paginated,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable) {
+
+        // Filter by branchId
         if (branchId != null) {
-            return ResponseEntity.ok(classService.getClassesByBranch(branchId));
+            List<ClassResponseDTO> classes = classService.getClassesByBranch(branchId);
+            return ResponseEntity.ok(classes);
         }
+
+        // Filter by type
         if (type != null) {
-            return ResponseEntity.ok(classService.getClassesByType(type));
+            List<ClassResponseDTO> classes = classService.getClassesByType(type);
+            return ResponseEntity.ok(classes);
         }
-        return ResponseEntity.ok(classService.getAllClasses());
+
+        // Return all with or without pagination
+        if (paginated) {
+            Page<ClassResponseDTO> page = classService.getAllClasses(pageable);
+            return ResponseEntity.ok(page);
+        } else {
+            List<ClassResponseDTO> list = classService.getAllClasses();
+            return ResponseEntity.ok(list);
+        }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ClassEntity> getClassById(@PathVariable Long id) {
-        return classService.getClassById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ClassResponseDTO> getClassById(@PathVariable Long id) {
+        ClassResponseDTO classe = classService.getClassById(id);
+        return ResponseEntity.ok(classe);
     }
 
     @PostMapping
-    public ResponseEntity<ClassEntity> createClass(@Valid @RequestBody ClassEntity classe) {
-        ClassEntity created = classService.createClass(classe);
+    public ResponseEntity<ClassResponseDTO> createClass(@Valid @RequestBody ClassRequestDTO requestDTO) {
+        ClassResponseDTO created = classService.createClass(requestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClassEntity> updateClass(@PathVariable Long id, @Valid @RequestBody ClassEntity classe) {
-        ClassEntity updated = classService.updateClass(id, classe);
+    public ResponseEntity<ClassResponseDTO> updateClass(
+            @PathVariable Long id,
+            @Valid @RequestBody ClassRequestDTO requestDTO) {
+        ClassResponseDTO updated = classService.updateClass(id, requestDTO);
         return ResponseEntity.ok(updated);
     }
 

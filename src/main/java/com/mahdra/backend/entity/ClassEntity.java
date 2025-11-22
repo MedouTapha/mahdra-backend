@@ -1,19 +1,21 @@
 package com.mahdra.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "classes")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ClassEntity {
 
     @Id
@@ -38,6 +40,7 @@ public class ClassEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
     @NotNull(message = "La branche est obligatoire")
+    @JsonBackReference
     private Branch branch;
 
     private String niveau; // Optional: niveau de la classe
@@ -60,5 +63,18 @@ public class ClassEntity {
         if (active == null) {
             active = true;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ClassEntity)) return false;
+        ClassEntity that = (ClassEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

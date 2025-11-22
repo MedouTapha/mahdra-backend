@@ -1,21 +1,23 @@
 package com.mahdra.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "donors")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Donor {
 
     @Id
@@ -50,6 +52,7 @@ public class Donor {
     private LocalDate dateInscription = LocalDate.now();
 
     @OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Commitment> commitments = new ArrayList<>();
 
     @PrePersist
@@ -60,5 +63,18 @@ public class Donor {
         if (actif == null) {
             actif = true;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Donor)) return false;
+        Donor donor = (Donor) o;
+        return Objects.equals(id, donor.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
