@@ -18,6 +18,7 @@ public class ClassMapper {
         entity.setName(dto.getName());
         entity.setType(dto.getType());
         entity.setYearStart(dto.getYearStart());
+        entity.setDateDebut(dto.getDateDebut()); // Date de début de l'année financière
         entity.setBranch(branch);
         entity.setNiveau(dto.getNiveau());
         entity.setStudentCount(dto.getStudentCount());
@@ -38,6 +39,13 @@ public class ClassMapper {
         dto.setType(entity.getType());
         dto.setYearStart(entity.getYearStart());
         dto.setCreatedDate(entity.getCreatedDate());
+        dto.setDateDebut(entity.getDateDebut());
+
+        // Calculer dateFin = dateDebut + 1 an - 1 jour
+        if (entity.getDateDebut() != null) {
+            dto.setDateFin(entity.getDateDebut().plusYears(1).minusDays(1));
+        }
+
         dto.setNiveau(entity.getNiveau());
         dto.setStudentCount(entity.getStudentCount());
         dto.setTeacher(entity.getTeacher());
@@ -60,6 +68,7 @@ public class ClassMapper {
         entity.setName(dto.getName());
         entity.setType(dto.getType());
         entity.setYearStart(dto.getYearStart());
+        entity.setDateDebut(dto.getDateDebut());
         entity.setBranch(branch);
         entity.setNiveau(dto.getNiveau());
         entity.setStudentCount(dto.getStudentCount());

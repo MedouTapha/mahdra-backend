@@ -15,6 +15,8 @@ public class ClassResponseDTO {
     private String type;
     private Integer yearStart;
     private LocalDate createdDate;
+    private LocalDate dateDebut;  // Date de début de l'année financière
+    private LocalDate dateFin;    // Date de fin de l'année financière (calculée)
     private Long branchId;
     private String branchNomfr;
     private String niveau;
