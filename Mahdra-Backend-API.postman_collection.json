@@ -1,0 +1,650 @@
+{
+  "info": {
+    "name": "Mahdra Backend API",
+    "description": "Collection complète pour l'API Mahdra Backend - Système de gestion des branches et classes mauritaniennes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "mahdra-backend"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Branches",
+      "item": [
+        {
+          "name": "Get All Branches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/branches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "branches"]
+            }
+          }
+        },
+        {
+          "name": "Get Branch by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/branches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "branches", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Branch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Branche Nouakchott\",\n  \"adresse\": \"Avenue Kennedy, Nouakchott\",\n  \"ville\": \"Nouakchott\",\n  \"telephone\": \"+222 45 25 30 40\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/branches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "branches"]
+            }
+          }
+        },
+        {
+          "name": "Update Branch",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Branche Nouakchott Centrale\",\n  \"adresse\": \"Avenue Kennedy, Nouakchott\",\n  \"ville\": \"Nouakchott\",\n  \"telephone\": \"+222 45 25 30 40\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/branches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "branches", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Branch",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/branches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "branches", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Donors",
+      "item": [
+        {
+          "name": "Get All Donors",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/donors",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors"]
+            }
+          }
+        },
+        {
+          "name": "Get Donor by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/donors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Donor",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Ba\",\n  \"prenom\": \"Amadou\",\n  \"email\": \"amadou.ba@example.com\",\n  \"telephone\": \"+222 46 12 34 56\",\n  \"adresse\": \"Tevragh Zeina, Nouakchott\",\n  \"type\": \"Individuel\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/donors",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors"]
+            }
+          }
+        },
+        {
+          "name": "Update Donor",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Ba\",\n  \"prenom\": \"Amadou Samba\",\n  \"email\": \"amadou.ba@example.com\",\n  \"telephone\": \"+222 46 12 34 56\",\n  \"adresse\": \"Tevragh Zeina, Nouakchott\",\n  \"type\": \"Individuel\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/donors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Donor",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/donors/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "donors", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Classes",
+      "item": [
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/classes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes"]
+            }
+          }
+        },
+        {
+          "name": "Get Class by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/classes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Classes by Branch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/classes/branch/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes", "branch", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Classes by Type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/classes/type/Coranique",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes", "type", "Coranique"]
+            }
+          }
+        },
+        {
+          "name": "Create Class",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Classe Coranique Niveau 1\",\n  \"type\": \"Coranique\",\n  \"yearStart\": 2025,\n  \"branchId\": 1,\n  \"niveau\": \"Débutant\",\n  \"studentCount\": 25,\n  \"teacher\": \"Cheikh Ahmed\",\n  \"description\": \"Classe pour débutants en apprentissage du Coran\",\n  \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/classes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes"]
+            }
+          }
+        },
+        {
+          "name": "Update Class",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Classe Coranique Niveau 1 - Section A\",\n  \"type\": \"Coranique\",\n  \"yearStart\": 2025,\n  \"branchId\": 1,\n  \"niveau\": \"Débutant\",\n  \"studentCount\": 30,\n  \"teacher\": \"Cheikh Ahmed\",\n  \"description\": \"Classe pour débutants en apprentissage du Coran\",\n  \"active\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/classes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Class",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/classes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "classes", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Commitments",
+      "item": [
+        {
+          "name": "Get All Commitments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments"]
+            }
+          }
+        },
+        {
+          "name": "Get Commitment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Commitments by Donor",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/donor/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "donor", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Commitments by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/statut/En cours",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "statut", "En cours"]
+            }
+          }
+        },
+        {
+          "name": "Create Commitment (without classes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": 1,\n  \"montant\": 50000.0,\n  \"dateEngagement\": \"2025-01-15\",\n  \"dateEcheance\": \"2025-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Engagement annuel pour soutien général\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments"]
+            }
+          }
+        },
+        {
+          "name": "Create Commitment (with classes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": 1,\n  \"montant\": 100000.0,\n  \"dateEngagement\": \"2025-01-15\",\n  \"dateEcheance\": \"2025-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Engagement pour classes coraniques\",\n  \"classeIds\": [1, 2, 3]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments"]
+            }
+          }
+        },
+        {
+          "name": "Create Commitment (multiple classes)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": 1,\n  \"montant\": 150000.0,\n  \"dateEngagement\": \"2025-02-01\",\n  \"dateEcheance\": \"2025-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Engagement pour plusieurs classes (coraniques et franco-arabes)\",\n  \"classeIds\": [1, 2, 3, 4, 5]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments"]
+            }
+          }
+        },
+        {
+          "name": "Update Commitment (add classes)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": 1,\n  \"montant\": 120000.0,\n  \"dateEngagement\": \"2025-01-15\",\n  \"dateEcheance\": \"2025-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Engagement mis à jour avec classes spécifiques\",\n  \"classeIds\": [1, 3, 5]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Commitment (remove all classes)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"donorId\": 1,\n  \"montant\": 80000.0,\n  \"dateEngagement\": \"2025-01-15\",\n  \"dateEcheance\": \"2025-12-31\",\n  \"statut\": \"En cours\",\n  \"description\": \"Engagement général sans classes spécifiques\",\n  \"classeIds\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Commitment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get All Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Get Payment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Payments by Commitment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/commitment/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "commitment", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commitmentId\": 1,\n  \"montant\": 25000.0,\n  \"datePaiement\": \"2025-01-20\",\n  \"modePaiement\": \"Virement bancaire\",\n  \"reference\": \"VIR-2025-001\",\n  \"notes\": \"Premier versement de l'engagement annuel\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Update Payment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commitmentId\": 1,\n  \"montant\": 30000.0,\n  \"datePaiement\": \"2025-01-20\",\n  \"modePaiement\": \"Virement bancaire\",\n  \"reference\": \"VIR-2025-001-CORRECTED\",\n  \"notes\": \"Premier versement - montant corrigé\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Payment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        {
+          "name": "Get All Expenses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses"]
+            }
+          }
+        },
+        {
+          "name": "Get Expense by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Get Expenses by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/categorie/Salaires",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "categorie", "Salaires"]
+            }
+          }
+        },
+        {
+          "name": "Create Expense",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"montant\": 50000.0,\n  \"dateDepense\": \"2025-01-15\",\n  \"categorie\": \"Salaires\",\n  \"description\": \"Salaire du mois de janvier pour les enseignants\",\n  \"beneficiaire\": \"Équipe pédagogique\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses"]
+            }
+          }
+        },
+        {
+          "name": "Update Expense",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"montant\": 55000.0,\n  \"dateDepense\": \"2025-01-15\",\n  \"categorie\": \"Salaires\",\n  \"description\": \"Salaire du mois de janvier pour les enseignants (avec primes)\",\n  \"beneficiaire\": \"Équipe pédagogique\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Expense",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
