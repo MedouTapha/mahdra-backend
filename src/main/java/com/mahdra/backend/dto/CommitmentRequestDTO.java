@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +28,6 @@ public class CommitmentRequestDTO {
     private String statut;
 
     private String description;
+
+    private List<Long> classeIds;
 }
