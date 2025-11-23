@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +21,8 @@ public class ClassRequestDTO {
 
     @NotNull(message = "L'année de début est obligatoire")
     private Integer yearStart;
+
+    private LocalDate dateDebut; // Date de début de l'année financière (optionnel, si null utilisera createdDate)
 
     @NotNull(message = "La branche est obligatoire")
     private Long branchId;

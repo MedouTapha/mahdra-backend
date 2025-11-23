@@ -37,6 +37,9 @@ public class ClassEntity {
     @Column(nullable = false)
     private LocalDate createdDate = LocalDate.now();
 
+    @Column(name = "date_debut")
+    private LocalDate dateDebut; // Date de début de l'année financière
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
     @NotNull(message = "La branche est obligatoire")
