@@ -1,9 +1,10 @@
 {
   "info": {
     "name": "Mahdra Backend API",
-    "description": "Collection complète pour l'API Mahdra Backend - Système de gestion des branches et classes mauritaniennes",
+    "description": "Collection complète pour l'API Mahdra Backend - Système de gestion des branches et classes mauritaniennes avec statistiques et analytique",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "mahdra-backend"
+    "_exporter_id": "mahdra-backend",
+    "version": "2.0.0"
   },
   "variable": [
     {
@@ -338,6 +339,25 @@
           }
         },
         {
+          "name": "Get Commitment Statistics by Year",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/commitments/stats?year=2025",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "commitments", "stats"],
+              "query": [
+                {
+                  "key": "year",
+                  "value": "2025"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Create Commitment (without classes)",
           "request": {
             "method": "POST",
@@ -563,6 +583,68 @@
               "raw": "{{baseUrl}}/api/expenses",
               "host": ["{{baseUrl}}"],
               "path": ["api", "expenses"]
+            }
+          }
+        },
+        {
+          "name": "Get Expenses by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses?startDate=2025-01-01&endDate=2025-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2025-12-31"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Expense Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/stats?startDate=2025-01-01&endDate=2025-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "stats"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-01-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2025-12-31"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Expense Statistics by Branch and Period",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/expenses/stats/branch/1?period=2025-01",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "expenses", "stats", "branch", "1"],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "2025-01"
+                }
+              ]
             }
           }
         },
