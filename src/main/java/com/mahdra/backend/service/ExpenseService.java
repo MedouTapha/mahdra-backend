@@ -118,13 +118,13 @@ public class ExpenseService {
     }
 
     public List<ExpenseResponseDTO> getExpensesByDateRange(LocalDate startDate, LocalDate endDate) {
-        return expenseRepository.findByDateDepenseBetween(startDate, endDate).stream()
+        return expenseRepository.findByDateBetween(startDate, endDate).stream()
                 .map(expenseMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     public ExpenseStatsDTO getExpenseStats(LocalDate startDate, LocalDate endDate) {
-        List<Expense> expenses = expenseRepository.findByDateDepenseBetween(startDate, endDate);
+        List<Expense> expenses = expenseRepository.findByDateBetween(startDate, endDate);
 
         ExpenseStatsDTO stats = new ExpenseStatsDTO();
         stats.setTotalCount(expenses.size());
