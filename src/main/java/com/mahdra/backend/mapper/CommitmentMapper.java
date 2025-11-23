@@ -2,14 +2,19 @@ package com.mahdra.backend.mapper;
 
 import com.mahdra.backend.dto.CommitmentRequestDTO;
 import com.mahdra.backend.dto.CommitmentResponseDTO;
+import com.mahdra.backend.entity.ClassEntity;
 import com.mahdra.backend.entity.Commitment;
 import com.mahdra.backend.entity.Donor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class CommitmentMapper {
 
-    public Commitment toEntity(CommitmentRequestDTO dto, Donor donor) {
+    public Commitment toEntity(CommitmentRequestDTO dto, Donor donor, List<ClassEntity> classes) {
         if (dto == null) {
             return null;
         }
@@ -21,6 +26,11 @@ public class CommitmentMapper {
         entity.setDateEcheance(dto.getDateEcheance());
         entity.setStatut(dto.getStatut());
         entity.setDescription(dto.getDescription());
+
+        if (classes != null) {
+            entity.setClasses(classes);
+        }
+
         return entity;
     }
 
@@ -43,10 +53,21 @@ public class CommitmentMapper {
             dto.setDonorPrenom(entity.getDonor().getPrenom());
         }
 
+        if (entity.getClasses() != null) {
+            List<CommitmentResponseDTO.ClassSimpleDTO> classDTOs = entity.getClasses().stream()
+                .map(classEntity -> new CommitmentResponseDTO.ClassSimpleDTO(
+                    classEntity.getId(),
+                    classEntity.getName(),
+                    classEntity.getType()
+                ))
+                .collect(Collectors.toList());
+            dto.setClasses(classDTOs);
+        }
+
         return dto;
     }
 
-    public void updateEntityFromDTO(CommitmentRequestDTO dto, Commitment entity, Donor donor) {
+    public void updateEntityFromDTO(CommitmentRequestDTO dto, Commitment entity, Donor donor, List<ClassEntity> classes) {
         if (dto == null || entity == null) {
             return;
         }
@@ -57,5 +78,12 @@ public class CommitmentMapper {
         entity.setDateEcheance(dto.getDateEcheance());
         entity.setStatut(dto.getStatut());
         entity.setDescription(dto.getDescription());
+
+        if (classes != null) {
+            entity.getClasses().clear();
+            entity.getClasses().addAll(classes);
+        } else {
+            entity.getClasses().clear();
+        }
     }
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +21,14 @@ public class CommitmentResponseDTO {
     private LocalDate dateEcheance;
     private String statut;
     private String description;
+    private List<ClassSimpleDTO> classes = new ArrayList<>();
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ClassSimpleDTO {
+        private Long id;
+        private String name;
+        private String type;
+    }
 }
