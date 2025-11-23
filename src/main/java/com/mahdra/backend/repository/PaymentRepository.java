@@ -20,6 +20,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     List<Payment> findByDatePaiementBetween(LocalDate startDate, LocalDate endDate);
 
+    List<Payment> findByDonorIdAndDatePaiementBetween(Long donorId, LocalDate startDate, LocalDate endDate);
+
     @Query("SELECT SUM(p.montant) FROM Payment p WHERE p.donor.id = :donorId")
     Double getTotalPaymentsByDonor(@Param("donorId") Long donorId);
 

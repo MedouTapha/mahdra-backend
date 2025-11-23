@@ -18,6 +18,8 @@ public interface CommitmentRepository extends JpaRepository<Commitment, Long> {
 
     List<Commitment> findByDonorIdAndStatut(Long donorId, String statut);
 
+    List<Commitment> findByDonorIdAndDateEngagementBetween(Long donorId, LocalDate startDate, LocalDate endDate);
+
     // Statistiques pour commitments
     @Query("SELECT SUM(c.montant) FROM Commitment c WHERE YEAR(c.dateEngagement) = :year")
     Double sumByYear(@Param("year") Integer year);
