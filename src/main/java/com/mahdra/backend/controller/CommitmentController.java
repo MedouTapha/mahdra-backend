@@ -2,6 +2,7 @@ package com.mahdra.backend.controller;
 
 import com.mahdra.backend.dto.CommitmentRequestDTO;
 import com.mahdra.backend.dto.CommitmentResponseDTO;
+import com.mahdra.backend.dto.CommitmentStatsDTO;
 import com.mahdra.backend.service.CommitmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -75,5 +76,12 @@ public class CommitmentController {
     public ResponseEntity<Void> deleteCommitment(@PathVariable Long id) {
         commitmentService.deleteCommitment(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<CommitmentStatsDTO> getCommitmentStatsByYear(
+            @RequestParam Integer year) {
+        CommitmentStatsDTO stats = commitmentService.getCommitmentStatsByYear(year);
+        return ResponseEntity.ok(stats);
     }
 }

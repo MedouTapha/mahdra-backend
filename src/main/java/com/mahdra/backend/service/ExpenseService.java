@@ -2,6 +2,7 @@ package com.mahdra.backend.service;
 
 import com.mahdra.backend.dto.ExpenseRequestDTO;
 import com.mahdra.backend.dto.ExpenseResponseDTO;
+import com.mahdra.backend.dto.ExpenseStatsDTO;
 import com.mahdra.backend.entity.Branch;
 import com.mahdra.backend.entity.ClassEntity;
 import com.mahdra.backend.entity.Expense;
@@ -16,7 +17,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,5 +115,41 @@ public class ExpenseService {
         return expenseRepository.findByPeriod(period).stream()
                 .map(expenseMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    public List<ExpenseResponseDTO> getExpensesByDateRange(LocalDate startDate, LocalDate endDate) {
+        return expenseRepository.findByDateDepenseBetween(startDate, endDate).stream()
+                .map(expenseMapper::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public ExpenseStatsDTO getExpenseStats(LocalDate startDate, LocalDate endDate) {
+        List<Expense> expenses = expenseRepository.findByDateDepenseBetween(startDate, endDate);
+
+        ExpenseStatsDTO stats = new ExpenseStatsDTO();
+        stats.setTotalCount(expenses.size());
+        stats.setTotalAmount(expenses.stream()
+                .mapToDouble(Expense::getMontant)
+                .sum());
+
+        // Grouper par catégorie
+        Map<String, Double> byCategory = new HashMap<>();
+        List<Object[]> categoryStats = expenseRepository.sumByCategoryAndDateRange(startDate, endDate);
+
+        for (Object[] row : categoryStats) {
+            String category = (String) row[0];
+            Double amount = (Double) row[1];
+            byCategory.put(category, amount);
+        }
+
+        stats.setByCategory(byCategory);
+        stats.setPeriod(startDate + " to " + endDate);
+
+        return stats;
+    }
+
+    public Double getExpenseStatsByBranchAndPeriod(Long branchId, String period) {
+        Double total = expenseRepository.sumByBranchAndPeriod(branchId, period);
+        return total != null ? total : 0.0;
     }
 }
