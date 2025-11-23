@@ -30,6 +30,6 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
     @Query("SELECT SUM(e.montant) FROM Expense e WHERE e.branch.id = :branchId AND e.period = :period")
     Double sumByBranchAndPeriod(@Param("branchId") Long branchId, @Param("period") String period);
 
-    @Query("SELECT e.categorie, SUM(e.montant) FROM Expense e WHERE e.date BETWEEN :startDate AND :endDate GROUP BY e.categorie")
+    @Query("SELECT e.type, SUM(e.montant) FROM Expense e WHERE e.date BETWEEN :startDate AND :endDate GROUP BY e.type")
     List<Object[]> sumByCategoryAndDateRange(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }
