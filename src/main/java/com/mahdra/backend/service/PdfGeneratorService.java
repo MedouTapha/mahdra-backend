@@ -156,7 +156,7 @@ public class PdfGeneratorService {
 
         // Table des détails
         if (payments.getDetails() != null && !payments.getDetails().isEmpty()) {
-            float[] columnWidths = {1.5f, 2, 1.5f, 1.5f, 2};
+            float[] columnWidths = {1.5f, 2.5f, 1.5f, 2};
             Table table = new Table(UnitValue.createPercentArray(columnWidths))
                     .setWidth(UnitValue.createPercentValue(100))
                     .setFontSize(9);
@@ -164,7 +164,6 @@ public class PdfGeneratorService {
             // En-têtes
             table.addHeaderCell(createHeaderCell("التاريخ\nDate", boldFont));
             table.addHeaderCell(createHeaderCell("الصف\nClasse", boldFont));
-            table.addHeaderCell(createHeaderCell("الطالب\nÉlève", boldFont));
             table.addHeaderCell(createHeaderCell("المبلغ\nMontant", boldFont));
             table.addHeaderCell(createHeaderCell("طريقة الدفع\nMode", boldFont));
 
@@ -172,7 +171,6 @@ public class PdfGeneratorService {
             for (ClientReportResponseDTO.PaymentDetail detail : payments.getDetails()) {
                 table.addCell(createDataCell(detail.getDate().format(DATE_FORMATTER), font));
                 table.addCell(createDataCell(detail.getNomClasse() != null ? detail.getNomClasse() : "-", font));
-                table.addCell(createDataCell(detail.getNomEleve() != null ? detail.getNomEleve() : "-", font));
                 table.addCell(createDataCell(formatAmount(detail.getMontant()), font));
                 table.addCell(createDataCell(detail.getModePaiement() != null ? detail.getModePaiement() : "-", font));
             }

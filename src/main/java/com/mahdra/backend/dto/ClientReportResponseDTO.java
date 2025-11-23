@@ -45,7 +45,6 @@ public class ClientReportResponseDTO {
         private Double montant;
         private String modePaiement;
         private String nomClasse;
-        private String nomEleve;
         private String description;
     }
 

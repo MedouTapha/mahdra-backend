@@ -196,9 +196,6 @@ public class ClientReportService {
             detail.setNomClasse(payment.getClasse().getName());
         }
 
-        // Note: Vous devrez adapter cela si votre entité Payment a une relation avec Student
-        detail.setNomEleve("-"); // À adapter selon votre modèle
-
         return detail;
     }
 
